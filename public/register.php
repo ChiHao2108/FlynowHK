@@ -1,8 +1,7 @@
 <?php
+require __DIR__.'/../db_connect.php';
 require __DIR__ . '/../app/Http/Controllers/RegisterController.php';
 include __DIR__ . '/includes/header.php';
-
-require __DIR__.'/../db_connect.php';
 ?>
 
 <!doctype html>
