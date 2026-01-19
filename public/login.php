@@ -44,6 +44,7 @@ $err = $controller->handleLogin();
         </div>
 
         <button class="btn btn-primary w-100 mb-3">Đăng nhập</button>
+        <a href="register.php" class="btn btn-link d-block text-center mt-3">Chưa có tài khoản? Đăng ký</a>
       </form>
     </div>
   </div>
