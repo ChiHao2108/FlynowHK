@@ -46,7 +46,7 @@ class LoginController {
 
         // 🔹 phân quyền
         if ($user['role'] === 'admin') {
-            header("Location: /admin.php");
+            header("Location: /admin/dashboard.php");
         } else {
             header("Location: /");
         }
