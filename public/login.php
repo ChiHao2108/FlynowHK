@@ -1,14 +1,15 @@
 <?php
 session_start();
-require_once __DIR__.'/../app/Http/Controllers/LoginController.php';
-include __DIR__.'/includes/header.php';
 
-include __DIR__.'/../db_connect.php';
+require_once __DIR__.'/../db_connect.php';
+require_once __DIR__.'/../app/Http/Controllers/LoginController.php';
 
 $controller = new LoginController($conn);
-$err = $controller->handleLogin();
+$err = $controller->handleLogin(); 
+// ⚠ nếu login thành công → controller đã redirect + exit
 ?>
 
+<?php include __DIR__.'/includes/header.php'; ?>
 <!doctype html>
 <html lang="vi">
 <head>
@@ -26,20 +27,23 @@ $err = $controller->handleLogin();
   <div class="login-container">
     <div class="login-card">
       <h4>Đăng nhập Flynow</h4>
-      <?php if($err): ?><div class="alert alert-danger"><?=$err?></div><?php endif; ?>
+
+      <?php if ($err): ?>
+        <div class="alert alert-danger"><?= htmlspecialchars($err) ?></div>
+      <?php endif; ?>
+
       <form method="post">
         <div class="mb-3">
           <label>Email</label>
-          <input type="email" class="form-control" name="email" placeholder="Nhập email..." required>
+          <input type="email" class="form-control" name="email" required>
         </div>
+
         <div class="mb-3">
           <label>Mật khẩu</label>
-          <input type="password" class="form-control" name="password" placeholder="••••••" required>
+          <input type="password" class="form-control" name="password" required>
         </div>
+
         <button class="btn btn-primary w-100 mb-3">Đăng nhập</button>
-        <div class="text-center">
-          <a href="register.php" class="btn-link">Chưa có tài khoản? Đăng ký ngay</a>
-        </div>
       </form>
     </div>
   </div>

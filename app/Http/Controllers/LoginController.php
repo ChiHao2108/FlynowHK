@@ -8,29 +8,19 @@ class LoginController {
     }
 
     public function handleLogin() {
-        $err = '';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim($_POST['email']);
-            $pass  = trim($_POST['password']);
-
-            $user = User::login($this->conn, $email, $pass);
-
-            if ($user) {
-                $_SESSION['user_id']  = $user['id'];
-                $_SESSION['fullname'] = $user['fullname'];
-                $_SESSION['role']     = $user['role'];
-                $_SESSION['avatar']   = $user['avatar'] ?: 'img/default-avatar.png';
-
-                if ($user['role'] === 'admin') {
-                    header('Location: /admin/dashboard.php');
-                } else {
-                    header('Location: /index.php');
-                }
-                exit;
-            } else {
-                $err = "Sai email hoặc mật khẩu.";
-            }
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return null;
         }
-        return $err;
+
+        // kiểm tra login
+        if ($loginSuccess) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['fullname'] = $user['fullname'];
+
+            header("Location: /admin.php");
+            exit; // 🚨 BẮT BUỘC
+        }
+
+        return "Email hoặc mật khẩu không đúng";
     }
 }
