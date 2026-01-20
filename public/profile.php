@@ -2,29 +2,33 @@
 session_start();
 include __DIR__ . '/../db_connect.php';
 require_once __DIR__.'/../app/Http/Controllers/ProfileController.php';
-include __DIR__.'/includes/header.php';
 
-if(!isset($_SESSION['user_id'])){
-    header('Location: login.php'); exit;
+/* CHECK LOGIN TRƯỚC */
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
 }
 
 $controller = new ProfileController($conn);
 $user_id = $_SESSION['user_id'];
 $user = $controller->getProfile($user_id);
+
 $msg = '';
 $errors = [];
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if($controller->updateProfile($user_id, $_POST, $_FILES)){
-        $msg = "Cập nhật thành công!";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($controller->updateProfile($user_id, $_POST, $_FILES)) {
         $_SESSION['fullname'] = $_POST['fullname'];
         $_SESSION['avatar']   = $user['avatar'];
+
         header("Location: profile.php");
         exit;
     } else {
         $errors[] = "Cập nhật thất bại.";
     }
 }
+
+include __DIR__.'/includes/header.php';
 ?>
 
 
