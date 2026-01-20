@@ -11,9 +11,7 @@ if (isset($_SESSION['user_id'])) {
 
 $current_page = basename($_SERVER['PHP_SELF']); 
 ?>
-<pre style="color:red">
-<?php print_r($_SESSION); ?>
-</pre>
+
 <!doctype html>
 <html lang="vi">
 <head>

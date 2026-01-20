@@ -24,7 +24,7 @@ class LoginController {
         $stmt = $this->conn->prepare("
             SELECT 
                 u.id,
-                COALESCE(ui.fullname, u.name) AS fullname,
+                COALESCE(ui.fullname, u.fullname) AS fullname,
                 u.password,
                 u.role,
                 ui.avatar
