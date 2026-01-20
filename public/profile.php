@@ -1,9 +1,8 @@
 <?php
 session_start();
+include __DIR__ . '/../db_connect.php';
 require_once __DIR__.'/../app/Http/Controllers/ProfileController.php';
 include __DIR__.'/includes/header.php';
-
-include __DIR__ . '/../db_connect.php';
 
 if(!isset($_SESSION['user_id'])){
     header('Location: login.php'); exit;
