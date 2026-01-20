@@ -6,7 +6,7 @@ require_once __DIR__.'/../app/Http/Controllers/ProfileController.php';
 /* CHECK LOGIN TRƯỚC */
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
-    exit;
+    exit;   
 }
 
 $controller = new ProfileController($conn);
@@ -18,8 +18,12 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($controller->updateProfile($user_id, $_POST, $_FILES)) {
-        $_SESSION['fullname'] = $_POST['fullname'];
-        $_SESSION['avatar']   = $user['avatar'];
+
+        // 🔥 LẤY LẠI DỮ LIỆU MỚI TỪ DB
+        $updatedUser = $controller->getProfile($user_id);
+
+        $_SESSION['fullname'] = $updatedUser['fullname'];
+        $_SESSION['avatar']   = $updatedUser['avatar'];
 
         header("Location: profile.php");
         exit;
@@ -27,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Cập nhật thất bại.";
     }
 }
+
 
 include __DIR__.'/includes/header.php';
 ?>
@@ -55,10 +60,20 @@ include __DIR__.'/includes/header.php';
     <form method="post" enctype="multipart/form-data">
         <div class="mb-3 text-center avatar-wrapper">
             <div class="avatar-circle">
-                <img src="<?= $user['avatar'] ? '/'.$user['avatar'] : '/img/default-avatar.png' ?>" 
-                    alt="Avatar" class="avatar-img">
+                <img
+                    id="avatarPreview"
+                    src="<?= $user['avatar'] ? '/'.$user['avatar'] : '/img/default-avatar.png' ?>"
+                    alt="Avatar"
+                    class="avatar-img"
+                >
             </div>
-            <input type="file" name="avatar" class="form-control mt-2">
+            <input
+                type="file"
+                name="avatar"
+                id="avatarInput"
+                class="form-control mt-2"
+                accept="image/*"
+            >
         </div>
         <div class="mb-3">
             <label>Email</label>
@@ -88,5 +103,28 @@ include __DIR__.'/includes/header.php';
     </form>
   </div>
 </div>
+
+<script>
+document.getElementById('avatarInput').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('Vui lòng chọn file ảnh');
+        e.target.value = '';
+        return;
+    }
+
+    const preview = document.getElementById('avatarPreview');
+
+    const objectUrl = URL.createObjectURL(file);
+    preview.src = objectUrl;
+
+    preview.onload = () => URL.revokeObjectURL(objectUrl);
+});
+</script>
+
+</body>
+</html>
 
 <?php include __DIR__.'/includes/footer.php'; ?>
