@@ -70,15 +70,18 @@ include __DIR__.'/includes/header.php';
         </div>
         <div class="mb-3">
             <label>Ngày sinh</label>
-            <input type="date" class="form-control" name="birthdate" value="<?=htmlspecialchars($user['birthdate'])?>">
+            <input type="date" class="form-control" name="birthdate"
+                value="<?= htmlspecialchars($user['birthdate'] ?? '') ?>">
         </div>
         <div class="mb-3">
             <label>Địa chỉ</label>
-            <input type="text" class="form-control" name="address" value="<?=htmlspecialchars($user['address'])?>">
+            <input type="text" class="form-control" name="address"
+                value="<?= htmlspecialchars($user['address'] ?? '') ?>">
         </div>
         <div class="mb-3">
             <label>Số điện thoại</label>
-            <input type="text" class="form-control" name="phone" value="<?=htmlspecialchars($user['phone'])?>">
+            <input type="text" class="form-control" name="phone"
+                value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
         </div>
         <button type="submit" class="btn btn-primary w-100">Cập nhật</button>
     </form>
