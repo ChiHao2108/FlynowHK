@@ -57,8 +57,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <div class="user-info">
       <?php if(isset($_SESSION['fullname'])): ?>
       <div class="user-menu">
-        <img src="<?= '/' . ($_SESSION['avatar'] ?? 'img/default-avatar.png') ?>" 
-             alt="Avatar" class="user-avatar">
+        <img src="<?= '/' . ($_SESSION['avatar'] ?? 'img/default-avatar.png') . '?v=' . time() ?>"
+            class="user-avatar">
         <span class="user-name"><?=htmlspecialchars($_SESSION['fullname'])?></span>
         <span class="arrow">&#9662;</span>
         <ul class="dropdown">
