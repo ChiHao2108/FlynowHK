@@ -21,12 +21,18 @@ class LoginController {
         }
 
         // 🔹 lấy user theo email
-        $stmt = $this->conn->prepare(
-            "SELECT id, fullname, password, role, avatar 
-            FROM users 
-            WHERE email = ? 
-            LIMIT 1"
-        );
+        $stmt = $this->conn->prepare("
+            SELECT 
+                u.id,
+                ui.fullname,
+                u.password,
+                u.role,
+                ui.avatar
+            FROM users u
+            LEFT JOIN user_info ui ON ui.user_id = u.id
+            WHERE u.email = ?
+            LIMIT 1
+        ");
         $stmt->bind_param("s", $email);
         $stmt->execute();
 
