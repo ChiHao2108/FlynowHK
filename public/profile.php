@@ -66,8 +66,9 @@ include __DIR__.'/includes/header.php';
         </div>
         <div class="mb-3">
             <label>Họ và tên</label>
-            <input type="text" class="form-control" name="fullname" value="<?=htmlspecialchars($user['fullname'])?>" required>
-        </div>
+            <input type="text" class="form-control" name="address"
+                value="<?= htmlspecialchars($user['address'] ?? '') ?>">        
+            </div>
         <div class="mb-3">
             <label>Ngày sinh</label>
             <input type="date" class="form-control" name="birthdate"
