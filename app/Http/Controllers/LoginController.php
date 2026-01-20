@@ -22,7 +22,10 @@ class LoginController {
 
         // 🔹 lấy user theo email
         $stmt = $this->conn->prepare(
-            "SELECT id, fullname, password, role FROM users WHERE email = ? LIMIT 1"
+            "SELECT id, fullname, password, role, avatar 
+            FROM users 
+            WHERE email = ? 
+            LIMIT 1"
         );
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -43,6 +46,7 @@ class LoginController {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['fullname'] = $user['fullname'];
         $_SESSION['role'] = $user['role'];
+        $_SESSION['avatar'] = $user['avatar'];
 
         // 🔹 phân quyền
         if ($user['role'] === 'admin') {
