@@ -17,7 +17,9 @@ class ProfileController {
             return false;
         }
 
-        $avatar = $postData['current_avatar'] ?? '';
+        // 🔥 LẤY AVATAR HIỆN TẠI TỪ DB
+        $currentUser = User::getProfile($this->conn, $user_id);
+        $avatar = $currentUser['avatar'] ?? null;
 
         if (isset($fileData['avatar']) && $fileData['avatar']['error'] === 0) {
             $allowed = ['jpg','jpeg','png'];
@@ -44,5 +46,4 @@ class ProfileController {
 
         return User::updateProfile($this->conn, $user_id, $data);
     }
-
 }
